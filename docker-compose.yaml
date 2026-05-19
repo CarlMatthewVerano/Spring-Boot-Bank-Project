@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  # --- Service 1: The PostgreSQL Database ---
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: banking-postgres
+    ports:
+      - "5432:5432" # Maps port 5432 on your PC to 5432 inside the container
+    environment:
+      POSTGRES_USER: ledger_admin
+      POSTGRES_PASSWORD: super_secret_password
+      POSTGRES_DB: banking_ledger
+    volumes:
+      - postgres-data:/var/lib/postgresql/data # Persists data on your hard drive
+
+  # --- Service 2: pgAdmin (Database GUI View) ---
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: banking-pgadmin
+    ports:
+      - "5050:80" # Maps port 5050 on your PC to the pgAdmin interface
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@bank.com
+      PGADMIN_DEFAULT_PASSWORD: adminpassword
+    depends_on:
+      - postgres-db
+
+# --- Named Volume Definition ---
+volumes:
+  postgres-data: # This keeps your banking data safe when the container stops
