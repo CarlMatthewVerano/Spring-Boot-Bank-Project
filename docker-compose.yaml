@@ -6,7 +6,7 @@ services:
     image: postgres:15-alpine
     container_name: banking-postgres
     ports:
-      - "5432:5432" # Maps port 5432 on your PC to 5432 inside the container
+      - "5433:5432" # Maps port 5432 on your PC to 5432 inside the container
     environment:
       POSTGRES_USER: ledger_admin
       POSTGRES_PASSWORD: super_secret_password
